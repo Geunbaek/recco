@@ -59,7 +59,16 @@ class ProductsBase(BaseModel):
 
 
 class ProductList(BaseModel):
-    product_num: int
+    id: int
+    name: str
+    img: str
+    brand: str
+    rating: str
+    price: str
+    ingredients: str
+
+    # totalPageCount: int
+    # currnetPage: int
 
     class Config:
         orm_mode = True
@@ -78,3 +87,30 @@ class ProductList(BaseModel):
 
 class SearchKeyword(BaseModel):
     keyword: str
+    searchResultType: str
+    requestPage: int
+    maxItemCountByPage: int
+
+
+class SearchCategory(BaseModel):
+    largeCategory: str
+    smallCategory: str
+    requestPage: int
+    maxItemCountByPage: int
+
+
+class SearchIngredients(BaseModel):
+    includeIngredient: List[str] = []
+    excludeIngredient: List[str] = []
+    requestPage: int
+    maxItemCountByPage: int
+
+
+class DetailId(BaseModel):
+    id: int
+
+
+class SearchResult(BaseModel):
+    totalPageCount: int
+    currentPage: int
+    result: List[ProductList] = []

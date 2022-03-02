@@ -14,16 +14,18 @@ router = APIRouter(
 )
 
 
-@router.get("/category", response_model=List[schemas.ProductList])
-def search_category(db: Session = Depends(get_db)):
-    return search.get_product_by_category(db)
+@router.post("/category", response_model=List[schemas.ProductList])
+def search_category(request: schemas.SearchCategory, db: Session = Depends(get_db)):
+    return search.get_product_by_category(db, request)
 
 
-@router.post("/keyword", response_model=List[schemas.ProductList])
+@router.post("/keyword", response_model=List[schemas.SearchResult])
 def search_keyword(request: schemas.SearchKeyword, db: Session = Depends(get_db)):
     return search.get_product_by_keyword(db, request)
 
 
 @router.get("/ingredient", response_model=List[schemas.ProductList])
-def search_ingredient(db: Session = Depends(get_db)):
-    return search.get_product_by_ingredient(db)
+def search_ingredient(
+    request: schemas.SearchIngredients, db: Session = Depends(get_db)
+):
+    return search.get_product_by_ingredient(db, request)

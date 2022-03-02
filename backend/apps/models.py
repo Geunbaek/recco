@@ -11,8 +11,16 @@ from database import Base
 class Dummy(Base):
     __tablename__ = "dummy"
 
-    product_num = Column(Integer, primary_key=True, index=True)
-    keyword = Column(String(100))
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(100), nullable=False)
+    img = Column(String(255), nullable=False)
+    brand = Column(String(255), nullable=False)
+    price = Column(String(255), nullable=False)
+    rating = Column(String(255), nullable=False)
+    ingredients = Column(String(100), nullable=False)
+    major_classification = Column(String(100))
+    medium_classification = Column(String(100))
+    minor_classification = Column(String(100))
 
 
 # class Products(Base):
@@ -30,7 +38,8 @@ class Dummy(Base):
 #     reviews = relationship("Review")
 
 #     ingredients = relationship(
-#         "Ingredient", secondary="ProductIngredientRelation", back_populates="Ingredient"
+#         "Ingredient", secondary=
+#               "ProductIngredientRelation", back_populates="Ingredient" #noqa
 #     )
 
 
@@ -64,27 +73,27 @@ class Dummy(Base):
 #     ingredient_id = Column(Integer, ForeignKey("ingredient.id"), index=True)
 
 
-class Review(Base):
-    __tablename__ = "review"
+# class Review(Base):
+#     __tablename__ = "review"
 
-    id = Column(Integer, primary_key=True, index=True)
-    product_num = Column(Integer, ForeignKey("products.product_num"), index=True)
-    user_name = Column(String(100), nullable=False)
-    user_age = Column(Integer, nullable=False)
-    user_type = Column(String(50), nullable=False)
-    user_sex = Column(String(10), nullable=False)
-    user_evaluate = Column(Integer, nullable=False)
-    review = Column(TEXT, nullable=False)
+#     id = Column(Integer, primary_key=True, index=True)
+#     product_num = Column(Integer, ForeignKey("products.product_num"), index=True)
+#     user_name = Column(String(100), nullable=False)
+#     user_age = Column(Integer, nullable=False)
+#     user_type = Column(String(50), nullable=False)
+#     user_sex = Column(String(10), nullable=False)
+#     user_evaluate = Column(Integer, nullable=False)
+#     review = Column(TEXT, nullable=False)
 
 
-class Descrip(Base):
-    __tablename__ = "descrip"
+# class Descrip(Base):
+#     __tablename__ = "descrip"
 
-    id = Column(Integer, primary_key=True, index=True)
-    product_num = Column(Integer, ForeignKey("products.product_num"), index=True)
-    color_type = Column(String(100), nullable=False)
-    cost = Column(Integer, nullable=False)
-    category = Column(String(100), nullable=False)
-    product_category_large = Column(String(100))
-    product_category_middle = Column(String(100))
-    product_category_small = Column(String(100))
+#     id = Column(Integer, primary_key=True, index=True)
+#     product_num = Column(Integer, ForeignKey("products.product_num"), index=True)
+#     color_type = Column(String(100), nullable=False)
+#     cost = Column(Integer, nullable=False)
+#     category = Column(String(100), nullable=False)
+#     product_category_large = Column(String(100))
+#     product_category_middle = Column(String(100))
+#     product_category_small = Column(String(100))
