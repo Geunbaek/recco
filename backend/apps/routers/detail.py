@@ -19,5 +19,5 @@ router = APIRouter(
 
 
 @router.get("/{id}", response_model=schemas.ProductList)
-def product_detail_by_id(id, db: Session = Depends(get_db)):
-    return detail.get_product_by_id(db)
+def product_detail_by_id(id: int, db: Session = Depends(get_db)):
+    return detail.get_product_by_id(id, db)

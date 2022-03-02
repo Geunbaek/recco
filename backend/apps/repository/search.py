@@ -17,13 +17,13 @@ def get_product_by_category(db: Session, request: schemas.SearchCategory):
         db.query(models.Dummy)
         .filter(
             (models.Dummy.major_classification.like(searchLarge))
-            | (models.Dummy.medium_classification.like(searchSmall))
+            & (models.Dummy.medium_classification.like(searchSmall))
         )
         .all()
     )
-    listLen = len(productList)
-    productList["totalPageCount"] = int(listLen / request.maxItemCountByPage)
-    productList["currentPage"] = request.requestPage
+    # listLen = len(productList)
+    # productList["totalPageCount"] = int(listLen / request.maxItemCountByPage)
+    # productList["currentPage"] = request.requestPage
     return productList
 
 
@@ -45,7 +45,9 @@ def get_product_by_keyword(db: Session, request: schemas.SearchKeyword):
         productList = (
             db.query(models.Dummy).filter(models.Dummy.ingredients.like(search)).all()
         )
-
+    # productList = dict(productList)
+    # searchResult=schemas.SearchResult
+    # searchResult["totalPageCount"]
     return productList
 
 
