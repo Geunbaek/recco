@@ -32,7 +32,6 @@ const SearchHistory = (props) => {
     const keywords = JSON.parse(localStorage.getItem('keywords'));
     keywords.splice(idx, 1);
     localStorage.setItem('keywords', JSON.stringify(keywords));
-    setSearchHistory(keywords);
   };
 
   const clickHistoryItem = (e) => {

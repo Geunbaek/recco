@@ -1,10 +1,24 @@
+from datetime import datetime
 from typing import List, Optional
 
 from fastapi import Depends
 from pydantic import BaseModel
 
+"""
+create_date, modify_data
+"""
 
-class ProductList(BaseModel):
+
+class BaseClass(BaseModel):
+    create_data: datetime
+    modify_data: Optional[datetime] = None
+
+
+class Message(BaseModel):
+    message: str
+
+
+class Product(BaseModel):
     product_num: int
     name: str
     img_url: str
@@ -12,44 +26,23 @@ class ProductList(BaseModel):
     average_rating: float
     capacity: str
     price: int
+    keywords: List[Optional[str]] = None
 
     class Config:
         orm_mode = True
 
 
-class ProductIdList(BaseModel):
-    product_id: List[int]
+class ProductList(Product):
+    hashtag: Optional[str] = ""
 
-
-class IngredientIdList(BaseModel):
-    ingredient_id: int
+    class Config:
+        orm_mode = True
 
 
 class SearchResult(BaseModel):
     totalPageCount: int
     currentPage: int
     result: List[ProductList]
-
-    class Config:
-        orm_mode = True
-
-
-class ProductNameList(BaseModel):
-    name: str
-
-    class Config:
-        orm_mode = True
-
-
-class ProductBrandList(BaseModel):
-    brand: str
-
-    class Config:
-        orm_mode = True
-
-
-class KoIngredientList(BaseModel):
-    ko_ingredient: str
 
     class Config:
         orm_mode = True
@@ -75,28 +68,6 @@ class IngredientAutocompleteList(BaseModel):
         orm_mode = True
 
 
-class SearchResultKeyword(BaseModel):
-    totalPageCount: int
-    currentPage: int
-    result: List[ProductList]
-    productList: List[str]
-    brandList: List[str]
-    ingredientList: List[str]
-
-    class Config:
-        orm_mode = True
-
-
-class SearchResultIngredient(BaseModel):
-    totalPageCount: int
-    currentPage: int
-    result: List[ProductList]
-    ingredientList: List[KoIngredientList]
-
-    class Config:
-        orm_mode = True
-
-
 class SearchKeyword(BaseModel):
     keyword: str
     searchResultType: str
@@ -114,16 +85,12 @@ class SearchCategory(BaseModel):
 
 
 class SearchIngredients(BaseModel):
-    includeIngredient: List[str]
-    excludeIngredient: List[str]
+    includeIngredient: List[Optional[str]] = None
+    excludeIngredient: List[Optional[str]] = None
     requestPage: int
     maxItemCountByPage: int
     sort: str
     # requestPage, maxItemCountByPage,sort가 공통 인자. 상속관계 만들기 가능.
-
-
-class DetailId(BaseModel):
-    id: int
 
 
 class IngredientList(BaseModel):
@@ -143,7 +110,8 @@ class ProductDetail(BaseModel):
     img_url: str
     brand: str
     average_rating: float
-    price: str
+    price: int
+    capacity: str
     description: str
     hashtag: str
     ingredientList: List[IngredientList]
@@ -165,3 +133,80 @@ class ProductDescription(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+"""
+review schema
+"""
+
+"""
+base
+"""
+
+
+class ReviewBase(BaseModel):
+    id: Optional[int] = None
+    fk_product_num: int
+
+
+"""
+create, modify, delete
+"""
+
+
+class ReviewManipulation(ReviewBase):
+    password: str
+    comment: str = None
+    images: List[Optional[str]] = None
+
+    class Config:
+        orm_mode = True
+
+
+class ReviewDelete(ReviewBase):
+    password: str
+
+    class Config:
+        orm_mode = True
+
+
+"""
+search
+"""
+
+
+class ReviewSearchImage(BaseModel):
+    img_path: Optional[str] = None
+
+    class Config:
+        orm_mode = True
+
+
+class ReviewSearch(ReviewBase):
+    comment: str
+    review_images: List[Optional[ReviewSearchImage]] = None
+    create_date: datetime
+    modify_data: Optional[datetime] = None
+
+    class Config:
+        orm_mode = True
+
+
+class ReviewReturn(BaseModel):
+    data: List[Optional[ReviewSearch]] = None
+    total_page: int
+    current_page: int
+
+
+"""
+recommand schema
+"""
+
+
+class KeywordList(BaseModel):
+    keyword: List[str]
+
+
+class KeywordCategoryList(BaseModel):
+    category: str
+    keywords: List[str]
