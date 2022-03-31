@@ -11,6 +11,8 @@ import { addProductCompareInfoAction } from '../../src/stores/modules/productCom
 import { getProductInfoAction } from '../../src/stores/modules/productInfo';
 import Error from 'next/error';
 import { NextSeo } from 'next-seo';
+import wrapper from '../../src/stores';
+import { END } from 'redux-saga';
 
 const Detail = () => {
   const router = useRouter();
@@ -31,9 +33,9 @@ const Detail = () => {
   });
   const { id } = router.query;
 
-  useEffect(() => {
-    dispatch(getProductInfoAction(id));
-  }, [id]);
+  // useEffect(() => {
+  //   dispatch(getProductInfoAction(id));
+  // }, [id]);
 
   const modalOpenHandle = useCallback(
     (kind) => {
@@ -87,6 +89,16 @@ const Detail = () => {
     </DetailBlock>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ query }) => {
+      const { id } = query;
+      store.dispatch(getProductInfoAction(id));
+      store.dispatch(END);
+      await store.sagaTask.toPromise();
+    }
+);
 
 const DetailBlock = styled.div`
   max-width: 1024px;
