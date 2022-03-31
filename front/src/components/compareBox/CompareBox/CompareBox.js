@@ -198,7 +198,8 @@ const CompareBoxBlock = styled.div`
   bottom: 25px;
   right: 25px;
   width: 370px;
-  height: 680px;
+  max-height: 680px;
+  height: 80vh;
   overflow-y: scroll;
   background-color: ${({ theme }) => theme.color.yellow2};
   border-radius: 30px;
