@@ -6,16 +6,16 @@ import { useRouter } from 'next/router';
 import { DefaultSeo } from 'next-seo';
 
 const DEFALT_SEO = {
-  canonical: 'https://www.recco.n-e.kr',
+  canonical: 'https://recco.vercel.app',
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
-    url: 'https://www.recco.n-e.kr',
+    url: 'https://recco.vercel.app',
     title: 'reCco',
     site_name: 'reCco',
     images: [
       {
-        url: 'https://www.recco.n-e.kr/images/logo.png',
+        url: 'https://recco.vercel.app/images/logo.png',
         width: 500,
         height: 500,
         alt: 'reCco',
