@@ -15,12 +15,12 @@ const Header = (props) => {
         <NavBlock>
           <li>
             <Link href="/search">
-              <a>search</a>
+              <a>Search</a>
             </Link>
           </li>
           <li>
             <Link href="/recommend">
-              <a>recommend</a>
+              <a>Recommend</a>
             </Link>
           </li>
         </NavBlock>
@@ -45,14 +45,15 @@ const Logo = styled.img`
 const NavBlock = styled.nav`
   display: flex;
   padding-left: 20px;
-  li + li {
-    padding-left: 10px;
+  li {
+    padding-left: 20px;
   }
   a {
     text-decoration: none;
     color: black;
     font-size: 20px;
     cursor: pointer;
+    letter-spacing: 1.5px;
   }
 `;
 export default Header;
