@@ -63,4 +63,13 @@ const SubSection = styled.div`
     margin-left: 10px;
   }
 `;
+
 export default SearchResultItem;
+export {
+  SearchResultItemBlock,
+  ImageWrap,
+  Description,
+  Name,
+  HashtagLIst,
+  SubSection,
+};
