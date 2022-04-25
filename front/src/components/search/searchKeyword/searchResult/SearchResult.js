@@ -12,6 +12,7 @@ import NoResult from '../../../commons/noResult/NoResult';
 import Pagination from '../../../commons/pagination/Pagination';
 import ResultSort from '../../../commons/resultSort/ResultSort';
 import SearchResultItem from '../../searchResultItem/SearchResultItem';
+import SearchResultItemSkeleton from '../../searchResultItem/SearchResultItemSkeleton';
 import Tab from './tab/Tab';
 
 const SearchResult = (props) => {
@@ -51,7 +52,7 @@ const SearchResult = (props) => {
     dispatch(setRequestDataAction());
   };
 
-  if (loadingStatus) return <LoadingComponent />;
+  // if (loadingStatus) return <LoadingComponent />;
   return (
     <div>
       <TabSection>
@@ -61,29 +62,33 @@ const SearchResult = (props) => {
           value={keywordResultRequestData.sort}
         />
       </TabSection>
-      {keywordResultRequestData.keyword.length !== 0 &&
-        (searchResultData.length === 0 ? (
-          <NoResult />
-        ) : (
-          <div>
-            <ul>
-              {searchResultData.map((cosmetic) => (
-                <a
-                  key={cosmetic.product_num}
-                  onClick={() => LinkDetailPageHandle(cosmetic.product_num)}
-                >
-                  <SearchResultItem cosmetic={cosmetic} />
-                </a>
-              ))}
-            </ul>
-            <Pagination
-              totalPage={resultTotalPage}
-              currentPage={keywordResultRequestData.requestPage}
-              setCurrentPage={setCurrentPage}
-              countByStep={5}
-            />
-          </div>
-        ))}
+      {loadingStatus
+        ? Array(5)
+            .fill(0)
+            .map(() => <SearchResultItemSkeleton />)
+        : keywordResultRequestData.keyword.length !== 0 &&
+          (searchResultData.length === 0 ? (
+            <NoResult />
+          ) : (
+            <div>
+              <ul>
+                {searchResultData.map((cosmetic) => (
+                  <a
+                    key={cosmetic.product_num}
+                    onClick={() => LinkDetailPageHandle(cosmetic.product_num)}
+                  >
+                    <SearchResultItem cosmetic={cosmetic} />
+                  </a>
+                ))}
+              </ul>
+              <Pagination
+                totalPage={resultTotalPage}
+                currentPage={keywordResultRequestData.requestPage}
+                setCurrentPage={setCurrentPage}
+                countByStep={5}
+              />
+            </div>
+          ))}
     </div>
   );
 };
