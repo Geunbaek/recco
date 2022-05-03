@@ -11,6 +11,7 @@ import { hashtagSplit } from '../../../utils/util';
 import LoadingComponent from '../../commons/loading/LoadingComponent';
 import Error from 'next/error';
 import NoResult from '../../commons/noResult/NoResult';
+import SearchResultItemSkeleton from '../searchResultItem/SearchResultItemSkeleton';
 
 const SearchResultFromCategory = ({
   largeCategory,
@@ -47,7 +48,19 @@ const SearchResultFromCategory = ({
     });
   };
 
-  if (loading) return <LoadingComponent />;
+  if (loading)
+    return (
+      <ResultBlock>
+        <div size={itemPerPage}>
+          {Array(itemPerPage)
+            .fill(0)
+            .map((cosmetic, idx) => {
+              return <SearchResultItemSkeleton />;
+            })}
+        </div>
+      </ResultBlock>
+    );
+
   if (error) return <Error statusCode={500} title={'네트워크 에러'} />;
   if (!productInfos)
     return <Error statusCode={500} title={'상품이 존재하지 않습니다.'} />;

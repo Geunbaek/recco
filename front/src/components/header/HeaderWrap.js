@@ -29,8 +29,7 @@ const HeaderBlock = styled.div`
   padding: 20px;
   box-sizing: border-box;
 
-  // position: fixed;
-  background-color: ${(props) => props.activeColor && props.theme.color.white};
+  backdrop-filter: ${(props) => props.activeColor && `blur(10px)`};
   z-index: 10;
   ${(props) => {
     if (props.path === '/') {

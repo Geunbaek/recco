@@ -11,6 +11,7 @@ import NoResult from '../../../commons/noResult/NoResult';
 import Pagination from '../../../commons/pagination/Pagination';
 import ResultSort from '../../../commons/resultSort/ResultSort';
 import SearchResultItem from '../../searchResultItem/SearchResultItem';
+import SearchResultItemSkeleton from '../../searchResultItem/SearchResultItemSkeleton';
 
 const SearchIngredientResult = (props) => {
   const router = useRouter();
@@ -42,14 +43,22 @@ const SearchIngredientResult = (props) => {
     });
   };
 
-  if (loadingStatus) return <LoadingComponent />;
+  // if (loadingStatus) return <LoadingComponent />;
 
   return (
     <ResultBlock>
       <SelectBlock>
         <ResultSort onChange={changeSort} value={resultRequestParams.sort} />
       </SelectBlock>
-      {searchIngredientResultData.length === 0 ? (
+      {loadingStatus ? (
+        <>
+          {Array(5)
+            .fill(0)
+            .map(() => (
+              <SearchResultItemSkeleton />
+            ))}
+        </>
+      ) : searchIngredientResultData.length === 0 ? (
         <NoResult />
       ) : (
         <div>
